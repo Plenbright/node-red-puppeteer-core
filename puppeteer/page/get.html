@@ -1,0 +1,55 @@
+<script type="text/javascript">
+    RED.nodes.registerType('puppeteer-page-get-value', {
+      category: 'Puppeteer',
+      color: '#118ab2',
+      defaults: {
+        name: { value: '' },
+        selector:  { value: '', required: true },
+        selectortype:  { value: 'str'},
+        property:  { value: 'innerText', required: true },
+        propertytype:  { value: 'str'}
+      },
+      inputs:1,
+      outputs:1,
+      icon: "fa-file-code-o.png",
+      label: function() {
+        let selector = this.selectortype != "str"?this.selectortype+"."+this.selector:this.selector.replace(/.*[> ]/,"")
+        let property = this.propertytype != "str"?this.propertytype+"."+this.property:this.property.replace(/.*[> ]/,"")
+        let label = this.name || selector+":"+property
+        return label==":"?"Get Value":label
+      },
+      paletteLabel: "Get Value",
+      oneditprepare: function() {
+        $("#node-input-selector").typedInput({
+          type:"str",
+          types:["str","msg","flow","global"],
+          typeField: "#node-input-selectortype"
+        })
+        $("#node-input-property").typedInput({
+          type:"str",
+          types:["str","msg","flow","global"],
+          typeField: "#node-input-propertytype"
+        })
+      }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="puppeteer-page-get-value">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" style="width:70%;" placeholder="Name" />
+  </div>
+  <div class="form-row">
+      <label for="node-input-selector">Selector</label>
+      <input id="node-input-selector"></input>
+      <input type="hidden" id="node-input-selectortype"></input>
+  </div>
+  <div class="form-row">
+      <label for="node-input-property">Property</label>
+      <input id="node-input-property"></input>
+      <input type="hidden" id="node-input-propertytype"></input>
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="puppeteer-page-get-value">
+</script>

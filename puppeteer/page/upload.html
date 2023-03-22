@@ -1,0 +1,53 @@
+<script type="text/javascript">
+    RED.nodes.registerType('puppeteer-page-upload', {
+      category: 'Puppeteer',
+      color: '#fe6d73',
+      defaults: {
+        name: { value: '' },
+        selector:  { value: '', required: true },
+        selectortype:  { value: 'str'},
+        file:  { value: '', required: true },
+        filetype:  { value: 'str'}
+      },
+      inputs:1,
+      outputs:1,
+      icon: "upload.svg",
+      label: function() {
+        let label = this.name==""?this.filetype != "str"?this.filetype+"."+this.file:this.file.replace(/.*[\/\\]/,""):this.name
+        return label || "Upload"
+      },
+      paletteLabel: "Upload",
+      oneditprepare: function() {
+        $("#node-input-selector").typedInput({
+          type:"str",
+          types:["str","msg","flow","global"],
+          typeField: "#node-input-selectortype"
+        })
+        $("#node-input-file").typedInput({
+          type:"str",
+          types:["str","msg","flow","global"],
+          typeField: "#node-input-filetype"
+        })
+      }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="puppeteer-page-upload">
+  <div class="form-row">
+    <label for="node-input-selector">selector</label>
+    <input id="node-input-selector"></input>
+    <input type="hidden" id="node-input-selectortype"></input>
+  </div>
+  <div class="form-row">
+    <label for="node-input-file">Upload File</label>
+    <input id="node-input-file"></input>
+    <input type="hidden" id="node-input-filetype"></input>
+  </div>
+  <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+      <input type="text" id="node-input-name" style="width:70%;" placeholder="Name" />
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="puppeteer-page-click">
+</script>
