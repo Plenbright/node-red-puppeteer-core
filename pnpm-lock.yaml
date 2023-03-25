@@ -1,23 +1,157 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@types/node': ^18.15.6
+  '@types/node-red': ^1.2.1
   puppeteer-core: ^19.7.5
+  typescript: ^5.0.2
 
 dependencies:
-  puppeteer-core: 19.7.5
+  puppeteer-core: 19.7.5_typescript@5.0.2
+
+devDependencies:
+  '@types/node': 18.15.6
+  '@types/node-red': 1.2.1
+  typescript: 5.0.2
 
 packages:
 
-  /@types/node/18.15.5:
-    resolution: {integrity: sha512-Ark2WDjjZO7GmvsyFFf81MXuGTA/d6oP38anyxWOL6EREyBKAxKoFHwBhaZxCfLRLpO8JgVXwqOwSwa7jRcjew==}
-    dev: false
-    optional: true
+  /@types/ace/0.0.48:
+    resolution: {integrity: sha512-esV6hOWiDOZ6d7w5S11iLu6LQsPGe/9RPzhri7gNNLdrK1LFpO9/m7IZhQL6dat0JHICJ7l51zvHAiCgnPLLHA==}
+    dev: true
+
+  /@types/body-parser/1.19.2:
+    resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
+    dependencies:
+      '@types/connect': 3.4.35
+      '@types/node': 18.15.6
+    dev: true
+
+  /@types/connect/3.4.35:
+    resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
+    dependencies:
+      '@types/node': 18.15.6
+    dev: true
+
+  /@types/cors/2.8.13:
+    resolution: {integrity: sha512-RG8AStHlUiV5ysZQKq97copd2UmVYw3/pRMLefISZ3S1hK104Cwm7iLQ3fTKx+lsUH2CE8FlLaYeEA2LSeqYUA==}
+    dependencies:
+      '@types/node': 18.15.6
+    dev: true
+
+  /@types/express-serve-static-core/4.17.33:
+    resolution: {integrity: sha512-TPBqmR/HRYI3eC2E5hmiivIzv+bidAfXofM+sbonAGvyDhySGw9/PQZFt2BLOrjUUR++4eJVpx6KnLQK1Fk9tA==}
+    dependencies:
+      '@types/node': 18.15.6
+      '@types/qs': 6.9.7
+      '@types/range-parser': 1.2.4
+    dev: true
+
+  /@types/express/4.17.17:
+    resolution: {integrity: sha512-Q4FmmuLGBG58btUnfS1c1r/NQdlp3DMfGDGig8WhfpA2YRUtEkxAjkZb0yvplJGYdF1fsQ81iMDcH24sSCNC/Q==}
+    dependencies:
+      '@types/body-parser': 1.19.2
+      '@types/express-serve-static-core': 4.17.33
+      '@types/qs': 6.9.7
+      '@types/serve-static': 1.15.1
+    dev: true
+
+  /@types/jquery/3.5.16:
+    resolution: {integrity: sha512-bsI7y4ZgeMkmpG9OM710RRzDFp+w4P1RGiIt30C1mSBT+ExCleeh4HObwgArnDFELmRrOpXgSYN9VF1hj+f1lw==}
+    dependencies:
+      '@types/sizzle': 2.3.3
+    dev: true
+
+  /@types/mime/3.0.1:
+    resolution: {integrity: sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==}
+    dev: true
+
+  /@types/node-red/1.2.1:
+    resolution: {integrity: sha512-v9azjmzDqgBHbc3DRn3/4J8TkyeeiRbfzELNb9yQHqEAMhTDFkjAyEnc4ZtM05QYD/9PhO5K8/afezqkRMadpA==}
+    dependencies:
+      '@types/express': 4.17.17
+      '@types/node-red__editor-api': 1.1.1
+      '@types/node-red__editor-client': 1.1.7
+      '@types/node-red__registry': 1.2.2
+      '@types/node-red__runtime': 1.2.0
+      '@types/node-red__util': 1.2.0
+    dev: true
+
+  /@types/node-red__editor-api/1.1.1:
+    resolution: {integrity: sha512-O7MNsGwNWDY89sPxVjo2zXGfm8bw4owXrD4akp2NmM1cmrj6XvRKEu99Apw/RjZvteBFpxvLSVtOnYYPj4C7wg==}
+    dependencies:
+      '@types/express': 4.17.17
+      '@types/node-red__runtime': 1.2.0
+    dev: true
+
+  /@types/node-red__editor-client/1.1.7:
+    resolution: {integrity: sha512-MP9pcYycbk3x42i7oNOayFAP35u5Yo/DiEkdnokeOpmPRLsFuuCTSEbcr9tyrm/Eot3FwT+46WN0r5ZC/QBrSQ==}
+    dependencies:
+      '@types/ace': 0.0.48
+      '@types/jquery': 3.5.16
+      '@types/node-red__runtime': 1.2.0
+      '@types/node-red__util': 1.2.0
+    dev: true
+
+  /@types/node-red__registry/1.2.2:
+    resolution: {integrity: sha512-Uf1+p9mJpDkTqUTKfauxWZmRwhRGe1go7765aYu5Uwy9G1hA8lL42/byu9/v73mw2Jsddn67aXhX1tYri5DdnA==}
+    dependencies:
+      '@types/express': 4.17.17
+      '@types/node-red__runtime': 1.2.0
+      '@types/node-red__util': 1.2.0
+    dev: true
+
+  /@types/node-red__runtime/1.2.0:
+    resolution: {integrity: sha512-1jSmhrzsBiW6OaNpyAdXitq0H3Zt2LYFNBhsLQE0LHSp77F26/bni1mFNGnIuo684CT+CX71kP6ZjuMJyeM/bA==}
+    dependencies:
+      '@types/cors': 2.8.13
+      '@types/express': 4.17.17
+      '@types/node-red__editor-api': 1.1.1
+      '@types/node-red__util': 1.2.0
+      '@types/passport': 1.0.12
+    dev: true
+
+  /@types/node-red__util/1.2.0:
+    resolution: {integrity: sha512-jxxznqRl2UhmMimkv7+vvxcsi0fXS1EnTmiuQ2FwplTNvl2Ui+g4K2vbG/Jn/rsLujpM6oyPPjwzKPG1diPqUQ==}
+    dependencies:
+      '@types/node-red__registry': 1.2.2
+      '@types/node-red__runtime': 1.2.0
+      jsonata: 1.8.3
+    dev: true
+
+  /@types/node/18.15.6:
+    resolution: {integrity: sha512-YErOafCZpK4g+Rp3Q/PBgZNAsWKGunQTm9FA3/Pbcm0VCriTEzcrutQ/SxSc0rytAp0NoFWue669jmKhEtd0sA==}
+
+  /@types/passport/1.0.12:
+    resolution: {integrity: sha512-QFdJ2TiAEoXfEQSNDISJR1Tm51I78CymqcBa8imbjo6dNNu+l2huDxxbDEIoFIwOSKMkOfHEikyDuZ38WwWsmw==}
+    dependencies:
+      '@types/express': 4.17.17
+    dev: true
+
+  /@types/qs/6.9.7:
+    resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
+    dev: true
+
+  /@types/range-parser/1.2.4:
+    resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
+    dev: true
+
+  /@types/serve-static/1.15.1:
+    resolution: {integrity: sha512-NUo5XNiAdULrJENtJXZZ3fHtfMolzZwczzBbnAeBbqBwG+LaG6YaJtuwzwGSQZ2wsCrxjEhNNjAkKigy3n8teQ==}
+    dependencies:
+      '@types/mime': 3.0.1
+      '@types/node': 18.15.6
+    dev: true
+
+  /@types/sizzle/2.3.3:
+    resolution: {integrity: sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ==}
+    dev: true
 
   /@types/yauzl/2.10.0:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 18.15.5
+      '@types/node': 18.15.6
     dev: false
     optional: true
 
@@ -169,6 +303,11 @@ packages:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
     dev: false
 
+  /jsonata/1.8.3:
+    resolution: {integrity: sha512-r6ztI6ohbpRo77AxBm6vMs3aHZi2L2PaakW7TCPwSkeGcuAZ/SxXGLWH2Npwqq5+YBM/fg/g0EXg/pI9HvXQ8Q==}
+    engines: {node: '>= 8'}
+    dev: true
+
   /lru-cache/7.18.3:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
@@ -239,7 +378,7 @@ packages:
       once: 1.4.0
     dev: false
 
-  /puppeteer-core/19.7.5:
+  /puppeteer-core/19.7.5_typescript@5.0.2:
     resolution: {integrity: sha512-EJuNha+SxPfaYFbkoWU80H3Wb1SiQH5fFyb2xdbWda0ziax5mhV63UMlqNfPeTDIWarwtR4OIcq/9VqY8HPOsg==}
     engines: {node: '>=14.14.0'}
     peerDependencies:
@@ -257,6 +396,7 @@ packages:
       proxy-from-env: 1.1.0
       rimraf: 4.4.0
       tar-fs: 2.1.1
+      typescript: 5.0.2
       unbzip2-stream: 1.4.3
       ws: 8.12.1
     transitivePeerDependencies:
@@ -320,6 +460,11 @@ packages:
   /tr46/0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
     dev: false
+
+  /typescript/5.0.2:
+    resolution: {integrity: sha512-wVORMBGO/FAs/++blGNeAVdbNKtIh1rbBL2EyQ1+J9lClJ93KiiKe8PmFIVdXhHcyv44SL9oglmfeSsndo0jRw==}
+    engines: {node: '>=12.20'}
+    hasBin: true
 
   /unbzip2-stream/1.4.3:
     resolution: {integrity: sha512-mlExGW4w71ebDJviH16lQLtZS32VKqsSfk80GCfUlwT/4/hNRFsoscrF/c++9xinkMzECL1uL9DDwXqFWkruPg==}
