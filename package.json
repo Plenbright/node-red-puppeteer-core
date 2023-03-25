@@ -4,9 +4,12 @@
   "description": "NodeRED nodes to control a headless chrome with puppeteer",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && pnpm run copy-files:browser && pnpm run copy-files:page",
     "watch": "tsc -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "copy-files:browser": "(cd src/browser; tar -cf - `find . -name '*.html' `) | (cd dist/browser ; tar -xf -)",
+    "copy-files:page": "(cd src/page; tar -cf - `find . -name '*.html' `) | (cd dist/page ; tar -xf -)"
+
   },
   "license": "MIT",
   "dependencies": {
