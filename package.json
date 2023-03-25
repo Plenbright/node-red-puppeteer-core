@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "NodeRED nodes to control a headless chrome with puppeteer",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "tsc && pnpm run copy-files:browser && pnpm run copy-files:page",
+    "watch": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "copy-files:browser": "(cd src/browser; tar -cf - `find . -name '*.html' `) | (cd dist/browser ; tar -xf -)",
+    "copy-files:page": "(cd src/page; tar -cf - `find . -name '*.html' `) | (cd dist/page ; tar -xf -)"
+
+  },
   "license": "MIT",
   "dependencies": {
     "puppeteer-core": "^19.7.5"
@@ -25,21 +32,26 @@
   "node-red": {
     "version": ">=2.0.0",
     "nodes": {
-      "puppeteer-browser-launch": "puppeteer/browser/launch.js",
-      "puppeteer-browser-close": "puppeteer/browser/close.js",
-      "puppeteer-browser-newPage": "puppeteer/browser/newPage.js",
-      "puppeteer-page-goto": "puppeteer/page/goto.js",
-      "puppeteer-page-screenshot": "puppeteer/page/screenshot.js",
-      "puppeteer-page-content": "puppeteer/page/content.js",
-      "puppeteer-page-click": "puppeteer/page/click.js",
-      "puppeteer-page-focus": "puppeteer/page/focus.js",
-      "puppeteer-page-waitFor": "puppeteer/page/waitFor.js",
-      "puppeteer-page-close": "puppeteer/page/close.js",
-      "puppeteer-page-keyboard-type": "puppeteer/page/keyboard/type.js",
-      "puppeteer-page-keyboard-press": "puppeteer/page/keyboard/press.js",
-      "puppeteer-page-get-value": "puppeteer/page/get.js",
-      "puppeteer-page-set-value": "puppeteer/page/set.js",
-      "puppeteer-page-upload": "puppeteer/page/upload.js"
+      "puppeteer-browser-launch": "dist/browser/launch.js",
+      "puppeteer-browser-close": "dist/browser/close.js",
+      "puppeteer-browser-newPage": "dist/browser/newPage.js",
+      "puppeteer-page-goto": "dist/page/goto.js",
+      "puppeteer-page-screenshot": "dist/page/screenshot.js",
+      "puppeteer-page-content": "dist/page/content.js",
+      "puppeteer-page-click": "dist/page/click.js",
+      "puppeteer-page-focus": "dist/page/focus.js",
+      "puppeteer-page-waitFor": "dist/page/waitFor.js",
+      "puppeteer-page-close": "dist/page/close.js",
+      "puppeteer-page-keyboard-type": "dist/page/keyboard/type.js",
+      "puppeteer-page-keyboard-press": "dist/page/keyboard/press.js",
+      "puppeteer-page-get-value": "dist/page/get.js",
+      "puppeteer-page-set-value": "dist/page/set.js",
+      "puppeteer-page-upload": "dist/page/upload.js"
     }
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.6",
+    "@types/node-red": "^1.2.1",
+    "typescript": "^5.0.2"
   }
 }
