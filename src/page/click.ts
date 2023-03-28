@@ -1,12 +1,13 @@
-import { NodeAPI, Node } from "node-red";
+import { NodeAPI } from "node-red";
 
 import {
+  PuppeteerNode,
   PuppeteerNodeConfig,
   PuppeteerMessageInFlow,
 } from "../types/PuppeteerConfigType";
 
 const handleInput = async (
-  node: Node,
+  node: PuppeteerNode,
   config: PuppeteerNodeConfig,
   message: PuppeteerMessageInFlow
 ) => {
@@ -56,24 +57,28 @@ const handleInput = async (
   }
 };
 
-const handleClose = (node: Node) => node.status({});
+const handleClose = (node: PuppeteerNode) => node.status({});
 
 module.exports = (RED: NodeAPI) => {
-  function PuppeteerPageClick(this: Node, config: PuppeteerNodeConfig) {
+  function PuppeteerPageClick(
+    this: PuppeteerNode,
+    config: PuppeteerNodeConfig
+  ) {
     RED.nodes.createNode(this, config);
     // Retrieve the config node
     config.clickCount = parseInt(Number(config.clickCount).toString() || "0");
+
+    this.clickCount = config.clickCount;
+    this.delay = config.delay;
+    this.button = config.button;
+    this.name = config.name;
+    this.selectortype = config.selectortype;
+    this.selector = config.selector;
+
     this.on("input", (message) =>
       handleInput(this, config, message as PuppeteerMessageInFlow)
     );
     this.on("close", () => handleClose(this));
-
-    // oneditprepare: function oneditprepare() {
-    //   $("#node-input-clickCount").val(config.clickCount);
-    //   $("#node-input-delay").val(config.delay);
-    //   $("#node-input-button").val(config.button);
-    //   $("#node-input-name").val(config.name);
-    // }
   }
   RED.nodes.registerType("puppeteer-page-click", PuppeteerPageClick);
 };

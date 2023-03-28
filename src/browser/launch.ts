@@ -1,4 +1,5 @@
-import { NodeAPI, Node } from "node-red";
+import { NodeAPI } from "node-red";
+
 import puppeteer, {
   ConnectOptions,
   Browser,
@@ -7,6 +8,7 @@ import puppeteer, {
 } from "puppeteer-core";
 
 import {
+  PuppeteerNode,
   PuppeteerNodeConfig,
   PuppeteerMessageInFlow,
 } from "../types/PuppeteerConfigType";
@@ -41,7 +43,7 @@ const launchPuppeteer = async (
 };
 
 const handleInput = async (
-  node: Node,
+  node: PuppeteerNode,
   config: PuppeteerNodeConfig,
   message: PuppeteerMessageInFlow
 ) => {
@@ -59,7 +61,7 @@ const handleInput = async (
 
     const launchOptions: LaunchOptions = {
       ...config,
-      browserWSEndpoint: config.websocketEndpoint,
+      browserWSEndpoint: config.browserWSEndpoint,
       browserURL: browserUrl,
     };
 
@@ -113,31 +115,41 @@ const handleInput = async (
   }
 };
 
-const handleClose = (node: Node) => node.status({});
+const handleClose = (node: PuppeteerNode) => node.status({});
 
 module.exports = (RED: NodeAPI) => {
-  function PuppeteerBrowserLaunch(this: Node, config: PuppeteerNodeConfig) {
+  function PuppeteerBrowserLaunch(
+    this: PuppeteerNode,
+    config: PuppeteerNodeConfig
+  ) {
     RED.nodes.createNode(this, config);
 
-    config.defaultViewport = null;
-    config.ignoreHTTPSErrors = true;
+    // set default config values
+
+    config.defaultViewport = config.defaultViewport ?? null;
+    config.ignoreHTTPSErrors = config.ignoreHTTPSErrors ?? true;
+    config.timeout = config.timeout ?? 30000;
+    config.headless = config.headless ?? true;
+    config.devtools = config.devtools ?? false;
+
+    this.slowMo = config.slowMo;
+    this.debugport = config.debugport;
+
+    this.browserUrl = config.browserUrl;
+    this.defaultViewport = config.defaultViewport;
+    this.ignoreHTTPSErrors = config.ignoreHTTPSErrors;
+    this.browserWSEndpoint = config.browserWSEndpoint;
+
+    this.timeout = config.timeout;
+    this.headless = config.headless;
+    this.devtools = config.devtools;
+
     // Retrieve the config node
     this.on("input", async (message) =>
       handleInput(this, config, message as PuppeteerMessageInFlow)
     );
 
     this.on("close", () => handleClose(this));
-
-    // oneditprepare: function oneditprepare() {
-    //   $("#node-input-timeout").val(config.timeout);
-    //   $("#node-input-slowMo").val(config.slowMo);
-    //   $("#node-input-headless").val(config.headless);
-    //   $("#node-input-debugport").val(config.debugport);
-    //   $("#node-input-browserUrl").val(config.browserUrl);
-    //   $("#node-input-browserWSEndpoint").val(config.browserWSEndpoint);
-    //   $("#node-input-devtools").val(config.devtools);
-    //   $("#node-input-name").val(config.name);
-    // }
   }
 
   RED.nodes.registerType("puppeteer-browser-launch", PuppeteerBrowserLaunch);

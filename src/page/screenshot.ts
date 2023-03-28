@@ -57,9 +57,6 @@ module.exports = function (RED: NodeAPI) {
       handleInput(this, config, message as PuppeteerMessageInFlow, RED)
     );
     this.on("close", () => handleClose(this));
-    // oneditprepare: function oneditprepare() {
-    //   $("#node-input-name").val(this.name);
-    // }
   }
   RED.nodes.registerType("puppeteer-page-screenshot", PuppeteerPageScreenshot);
 };
