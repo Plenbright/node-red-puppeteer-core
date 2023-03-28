@@ -1,5 +1,5 @@
 {
-  "name": "node-red-puppeteer-core",
+  "name": "@plenbright/node-red-puppeteer-core",
   "version": "1.0.1",
   "description": "NodeRED nodes to control a headless chrome with puppeteer",
   "main": "index.js",
