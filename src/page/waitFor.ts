@@ -1,12 +1,13 @@
-import { NodeAPI, Node } from "node-red";
+import { NodeAPI } from "node-red";
 
 import {
+  PuppeteerNode,
   PuppeteerNodeConfig,
   PuppeteerMessageInFlow,
 } from "../types/PuppeteerConfigType";
 
 const handleInput = async (
-  node: Node,
+  node: PuppeteerNode,
   config: PuppeteerNodeConfig,
   message: PuppeteerMessageInFlow
 ) => {
@@ -48,11 +49,17 @@ const handleInput = async (
   }
 };
 
-const handleClose = (node: Node) => node.status({});
+const handleClose = (node: PuppeteerNode) => node.status({});
 
 module.exports = (RED: NodeAPI) => {
-  function PuppeteerPageWaitFor(this: Node, config: PuppeteerNodeConfig) {
+  function PuppeteerPageWaitFor(
+    this: PuppeteerNode,
+    config: PuppeteerNodeConfig
+  ) {
     RED.nodes.createNode(this, config);
+
+    this.selector = config.selector;
+    this.selectortype = config.selectortype;
 
     // Retrieve the config node
     this.on("input", (message) =>
@@ -60,10 +67,6 @@ module.exports = (RED: NodeAPI) => {
     );
 
     this.on("close", () => handleClose(this));
-
-    // oneditprepare: function oneditprepare() {
-    //   $("#node-input-name").val(this.name);
-    // }
   }
   RED.nodes.registerType("puppeteer-page-waitFor", PuppeteerPageWaitFor);
 };

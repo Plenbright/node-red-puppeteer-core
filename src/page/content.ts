@@ -41,10 +41,6 @@ module.exports = (RED: NodeAPI) => {
     );
 
     this.on("close", () => handleClose(node));
-
-    // oneditprepare: function oneditprepare() {
-    //   $("#node-input-name").val(this.name);
-    // }
   }
   RED.nodes.registerType("puppeteer-page-content", PuppeteerPageContent);
 };

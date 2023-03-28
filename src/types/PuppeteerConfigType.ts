@@ -1,4 +1,4 @@
-import { NodeDef, NodeMessageInFlow } from "node-red";
+import { NodeDef, NodeMessageInFlow, Node } from "node-red";
 import {
   Page,
   Browser,
@@ -6,9 +6,29 @@ import {
   MouseButton,
   Protocol,
   KeyInput,
+  PuppeteerLifeCycleEvent,
 } from "puppeteer-core";
 
-export type PuppeteerNodeConfig = NodeDef & {
+type PuppeteerInitConfiguration = {
+  slowMo?: number;
+  headless?: boolean;
+  devtools?: boolean;
+  timeout?: number;
+  ignoreHTTPSErrors?: boolean;
+  browserUrl?: string;
+  browserWSEndpoint: string;
+  defaultViewport?: Viewport | null;
+  debugport?: number;
+};
+
+type PuppeteerPageConfiguration = {
+  fullpage?: boolean;
+  waitUntil?: PuppeteerLifeCycleEvent;
+
+  clickCount?: number | string;
+  delay: number;
+  button: MouseButton;
+
   key?: KeyInput;
 
   text?: string;
@@ -28,19 +48,15 @@ export type PuppeteerNodeConfig = NodeDef & {
 
   file?: string;
   filetype?: "str" | "msg" | "flow" | "global";
-
-  fullpage?: boolean;
-
-  delay: number;
-  button: MouseButton;
-  clickCount?: number | string;
-  debugport?: number;
-  timeout?: number;
-  ignoreHTTPSErrors?: boolean;
-  browserUrl?: string;
-  websocketEndpoint: string;
-  defaultViewport?: Viewport | null;
 };
+
+export type PuppeteerNode = Node &
+  PuppeteerInitConfiguration &
+  PuppeteerPageConfiguration;
+
+export type PuppeteerNodeConfig = NodeDef &
+  PuppeteerInitConfiguration &
+  PuppeteerPageConfiguration;
 
 export type PuppeteerMessageInFlow = NodeMessageInFlow & {
   headers?: Protocol.Network.GetAllCookiesResponse;

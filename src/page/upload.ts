@@ -1,12 +1,13 @@
-import { NodeAPI, Node } from "node-red";
+import { NodeAPI } from "node-red";
 
 import {
+  PuppeteerNode,
   PuppeteerNodeConfig,
   PuppeteerMessageInFlow,
 } from "../types/PuppeteerConfigType";
 
 const handleInput = async (
-  node: Node,
+  node: PuppeteerNode,
   config: PuppeteerNodeConfig,
   message: PuppeteerMessageInFlow
 ) => {
@@ -45,7 +46,7 @@ const handleInput = async (
 
     node.status({ fill: "green", shape: "dot", text: `Upload ${file}` });
 
-    const uploadSelector = await message.puppeteer.page.$(selector) as any; 
+    const uploadSelector = (await message.puppeteer.page.$(selector)) as any;
 
     if (uploadSelector === null) {
       throw new Error("Upload selector not found");
@@ -64,21 +65,25 @@ const handleInput = async (
   }
 };
 
-const handleClose = (node: Node) => node.status({});
+const handleClose = (node: PuppeteerNode) => node.status({});
 
 module.exports = (RED: NodeAPI) => {
-  function PuppeteerPageUpload(this: Node, config: PuppeteerNodeConfig) {
+  function PuppeteerPageUpload(
+    this: PuppeteerNode,
+    config: PuppeteerNodeConfig
+  ) {
     RED.nodes.createNode(this, config);
+
+    this.name = config.name;
+    this.file = config.file;
+    this.filetype = config.filetype;
 
     // Retrieve the config node
     this.on("input", (message) =>
       handleInput(this, config, message as PuppeteerMessageInFlow)
     );
     this.on("close", () => handleClose(this));
-
-    // oneditprepare: function oneditprepare() {
-    //   $("#node-input-name").val(this.name);
-    // }
   }
+
   RED.nodes.registerType("puppeteer-page-upload", PuppeteerPageUpload);
 };

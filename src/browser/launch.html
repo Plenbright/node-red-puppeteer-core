@@ -18,6 +18,16 @@
     label: function () {
       return this.name || "Launch";
     },
+    oneditprepare: function oneditprepare() {
+      $("#node-input-timeout").val(this.timeout);
+      $("#node-input-slowMo").val(this.slowMo);
+      $("#node-input-headless").val(this.headless);
+      $("#node-input-debugport").val(this.debugport);
+      $("#node-input-browserUrl").val(this.browserUrl);
+      $("#node-input-browserWSEndpoint").val(this.browserWSEndpoint);
+      $("#node-input-devtools").val(this.devtools);
+      $("#node-input-name").val(this.name);
+    },
     paletteLabel: "Launch",
   });
 </script>

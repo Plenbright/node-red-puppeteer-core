@@ -54,10 +54,6 @@ module.exports = (RED: NodeAPI) => {
       handleInput(node, config, message as PuppeteerMessageInFlow)
     );
     this.on("close", () => handleClose(node));
-
-    // oneditprepare: function oneditprepare() {
-    //   $("#node-input-name").val(this.name);
-    // }
   }
   RED.nodes.registerType("puppeteer-browser-close", PuppeteerBrowserClose);
 };

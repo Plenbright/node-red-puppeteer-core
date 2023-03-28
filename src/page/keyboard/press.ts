@@ -1,12 +1,13 @@
-import { NodeAPI, Node } from "node-red";
+import { NodeAPI } from "node-red";
 
 import {
+  PuppeteerNode,
   PuppeteerNodeConfig,
   PuppeteerMessageInFlow,
 } from "../../types/PuppeteerConfigType";
 
 const handleInput = async (
-  node: Node,
+  node: PuppeteerNode,
   config: PuppeteerNodeConfig,
   message: PuppeteerMessageInFlow
 ) => {
@@ -42,23 +43,22 @@ const handleInput = async (
   }
 };
 
-const handleClose = (node: Node) => node.status({});
+const handleClose = (node: PuppeteerNode) => node.status({});
 
 module.exports = (RED: NodeAPI) => {
-  function PuppeteerPageKeyboardPress(this: Node, config: PuppeteerNodeConfig) {
+  function PuppeteerPageKeyboardPress(
+    this: PuppeteerNode,
+    config: PuppeteerNodeConfig
+  ) {
     RED.nodes.createNode(this, config);
 
+    this.key = config.key;
     // Retrieve the config node
     this.on("input", (message) =>
       handleInput(this, config, message as PuppeteerMessageInFlow)
     );
 
     this.on("close", () => handleClose(this));
-
-    // oneditprepare: function oneditprepare() {
-    //   $("#node-input-name").val(this.name);
-    //   $("#node-input-key").val(this.key);
-    // }
   }
   RED.nodes.registerType(
     "puppeteer-page-keyboard-press",
