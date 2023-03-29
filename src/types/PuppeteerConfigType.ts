@@ -9,45 +9,48 @@ import {
   PuppeteerLifeCycleEvent,
 } from "puppeteer-core";
 
-type PuppeteerInitConfiguration = {
+export type PuppeteerInitConfiguration = {
   slowMo?: number;
   headless?: boolean;
   devtools?: boolean;
   timeout?: number;
   ignoreHTTPSErrors?: boolean;
   browserUrl?: string;
-  browserWSEndpoint: string;
+  browserWSEndpoint?: string;
   defaultViewport?: Viewport | null;
   debugport?: number;
 };
 
-type PuppeteerPageConfiguration = {
+export type RedItemType = "str" | "msg" | "flow" | "global";
+
+export type PuppeteerPageConfiguration = {
   fullpage?: boolean;
   waitUntil?: PuppeteerLifeCycleEvent;
 
   clickCount?: number | string;
+
   delay: number;
   button: MouseButton;
 
   key?: KeyInput;
 
   text?: string;
-  texttype?: "str" | "msg" | "flow" | "global";
+  texttype?: RedItemType;
 
   url?: string;
-  urltype?: "str" | "msg" | "flow" | "global";
+  urltype?: RedItemType;
 
   selector?: string;
-  selectortype?: "str" | "msg" | "flow" | "global";
+  selectortype?: RedItemType;
 
   property?: string;
-  propertytype?: "str" | "innerText" | "innerHTML" | "outerHTML";
+  propertytype?: RedItemType;
 
   value?: string;
-  valuetype?: "str" | "msg" | "flow" | "global";
+  valuetype?: RedItemType;
 
   file?: string;
-  filetype?: "str" | "msg" | "flow" | "global";
+  filetype?: RedItemType;
 };
 
 export type PuppeteerNode = Node &
