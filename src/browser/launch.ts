@@ -29,6 +29,14 @@ const launchPuppeteer = async (
     args: [],
   };
 
+  if (launchOptions.browserWSEndpoint) {
+    delete launchOptions.browserURL;
+  }
+
+  if (launchOptions.browserURL) {
+    delete launchOptions.browserWSEndpoint;
+  }
+
   if (!isRemoteInstance) {
     launchOptions.args = [
       "--disable-setuid-sandbox",
@@ -75,31 +83,35 @@ const handleInput = async (
         shape: "ring",
         text: "Attached to existing browser",
       });
+
+      const pages = await message.puppeteer?.browser?.pages();
+
+      let page = pages?.[0];
+
+      if (!page) {
+        page = await browser.newPage();
+      }
+
+      page.setDefaultTimeout(config.timeout ?? 30000);
+
+      message.puppeteer = {
+        browser,
+        page,
+      };
     } else {
       node.status({
         fill: "grey",
         shape: "ring",
         text: "Launched new browser",
       });
+      const page = await browser.newPage();
+      page.setDefaultTimeout(config.timeout ?? 30000);
+
+      message.puppeteer = {
+        browser,
+        page,
+      };
     }
-
-    message.puppeteer = {
-      browser,
-    };
-
-    const pages = await message.puppeteer?.browser?.pages();
-
-    let page = pages?.[0];
-
-    if (!page) {
-      page = await message.puppeteer?.browser?.newPage();
-    }
-
-    if (!page) {
-      throw new Error("No page available");
-    }
-
-    page.setDefaultTimeout(config.timeout ?? 30000);
 
     node.send(message);
   } catch (err) {
