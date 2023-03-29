@@ -1,6 +1,6 @@
 {
   "name": "@plenbright/node-red-puppeteer-core",
-  "version": "1.0.1",
+  "version": "1.0.1-6",
   "description": "NodeRED nodes to control a headless chrome with puppeteer",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "copy-files:browser": "(cd src/browser; tar -cf - `find . -name '*.html' `) | (cd dist/browser ; tar -xf -)",
     "copy-files:page": "(cd src/page; tar -cf - `find . -name '*.html' `) | (cd dist/page ; tar -xf -)"
-
   },
   "license": "MIT",
   "dependencies": {
