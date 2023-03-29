@@ -42,7 +42,11 @@ const handleInput = async (
       throw new Error("Page not found");
     }
 
-    await message.puppeteer.page.waitForSelector(selector);
+    await message.puppeteer.page.content()
+
+    await message.puppeteer.page.waitForSelector(selector, {
+      timeout: config.timeout,
+    });
 
     node.status({
       fill: "green",
@@ -76,6 +80,7 @@ module.exports = (RED: NodeAPI) => {
   ) {
     RED.nodes.createNode(this, config);
 
+    this.timeout = config.timeout;
     this.selector = config.selector;
     this.selectortype = config.selectortype;
     this.property = config.property;

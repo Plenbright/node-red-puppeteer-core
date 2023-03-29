@@ -4,6 +4,11 @@
     color: "#118ab2",
     defaults: {
       name: { value: "" },
+      timeout: {
+        value: 30000,
+        required: true,
+        validate: RED.validators.number(),
+      },
       selector: { value: "", required: true },
       selectortype: { value: "str" },
       property: { value: "innerText", required: true },
@@ -42,19 +47,24 @@
 </script>
 
 <script type="text/x-red" data-template-name="puppeteer-page-get-value">
-  <div class="form-row">
-    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-    <input type="text" id="node-input-name" style="width:70%;" placeholder="Name" />
-  </div>
-  <div class="form-row">
-      <label for="node-input-selector">Selector</label>
-      <input id="node-input-selector"></input>
-      <input type="hidden" id="node-input-selectortype"></input>
-  </div>
-  <div class="form-row">
-      <label for="node-input-property">Property</label>
-      <input id="node-input-property"></input>
-      <input type="hidden" id="node-input-propertytype"></input>
+    <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+      <input type="text" id="node-input-name" style="width:70%;" placeholder="Name" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-selector">Selector</label>
+        <input id="node-input-selector"></input>
+        <input type="hidden" id="node-input-selectortype"></input>
+    </div>
+    <div class="form-row">
+        <label for="node-input-property">Property</label>
+        <input id="node-input-property"></input>
+        <input type="hidden" id="node-input-propertytype"></input>
+    </div>
+    <div class="form-row">
+      <label for="node-input-timeout"><i class="fa fa-clock-o"></i> Timeout</label>
+      <input type="number" id="node-input-timeout" style="width:100px;" placeholder="30000" />
+      <span>milliseconds</span>
   </div>
 </script>
 
