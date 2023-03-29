@@ -8,8 +8,8 @@
       headless: { value: 0, require: true },
       debugport: { value: 0 },
       devtools: { value: false },
-      wsendpoint: { value: "wss://" },
-      browserurl: { value: "http://" },
+      browserWSEndpoint: { value: "wss://" },
+      browserUrl: { value: "http://" },
       name: { value: "" },
     },
     inputs: 1,
@@ -52,12 +52,12 @@
         <input type="number" id="node-input-debugport" style="width:100px;" placeholder="0" />
     </div>
     <div class="form-row">
-      <label for="node-input-wsendpoint"><i class="fa fa-cloud"></i> Websocket Endpoint</label>
-      <input type="text" id="node-input-wsendpoint" style="width:70%;" placeholder="wss://" />
+      <label for="node-input-browserWSEndpoint"><i class="fa fa-cloud"></i> Websocket Endpoint</label>
+      <input type="text" id="node-input-browserWSEndpoint" style="width:70%;" placeholder="wss://" />
   </div>
   <div class="form-row">
-    <label for="node-input-browserurl"><i class="fa fa-globe"></i> Browser Url</label>
-    <input type="text" id="node-input-browserurl" style="width:70%;" placeholder="http://127.0.0.1" />
+    <label for="node-input-browserUrl"><i class="fa fa-globe"></i> Browser Url</label>
+    <input type="text" id="node-input-browserUrl" style="width:70%;" placeholder="http://127.0.0.1" />
     </div>
     <div class="form-row">
         <label for="node-input-devtools" style="width: auto !important; padding-right:10px"><i class="fa fa-briefcase"></i> Show Devtools</label>
