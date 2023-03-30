@@ -41,6 +41,8 @@ const handleInput = async (
             selector = String(value);
           }
         }
+
+        break;
       }
     }
 

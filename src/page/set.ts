@@ -53,10 +53,12 @@ const handleInput = async (
           message,
           key
         );
+        break
       }
 
       default: {
         value = `${config.valuetype}.${config.value}`;
+        break
       }
     }
 
