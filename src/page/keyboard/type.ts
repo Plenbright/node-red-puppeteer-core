@@ -20,16 +20,26 @@ const handleInput = async (
       }
 
       case "flow": {
-        text = node
-          .context()
-          .flow.get(config.text as keyof PuppeteerMessageInFlow) as string;
+        if (config.text) {
+          const value = node.context().flow.get(config.text);
+
+          if (value) {
+            text = String(value);
+          }
+        }
+
         break;
       }
 
       case "global": {
-        text = node
-          .context()
-          .global.get(config.text as keyof PuppeteerMessageInFlow) as string;
+        if (config.text) {
+          const value = node.context().global.get(config.text);
+
+          if (value) {
+            text = String(value);
+          }
+        }
+
         break;
       }
     }

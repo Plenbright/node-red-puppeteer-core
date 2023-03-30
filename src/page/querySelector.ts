@@ -12,36 +12,48 @@ const handleInput = async (
   message: PuppeteerMessageInFlow
 ) => {
   try {
-    let selector = config.selector ?? "a";
-    const property = config.property ?? "innerText";
-
-    if (!config.selector) {
-      throw new Error("Selector not found");
-    }
+    let selector = config.selector;
 
     switch (config.selectortype) {
       case "msg": {
-        selector = message[config.selector as keyof PuppeteerMessageInFlow];
+        if (config.selector) {
+          selector = message[config.selector];
+        }
         break;
       }
 
       case "flow": {
-        selector = node.context().flow.get(config.selector) as string;
+        if (config.selector) {
+          const value = node.context().flow.get(config.selector);
+
+          if (value) {
+            selector = String(value);
+          }
+        }
         break;
       }
 
       case "global": {
-        selector = node.context().global.get(config.selector) as string;
+        if (config.selector) {
+          const value = node.context().global.get(config.selector);
+
+          if (value) {
+            selector = String(value);
+          }
+        }
       }
+    }
+
+    if (!selector) {
+      // Default to a
+      selector = "a";
     }
 
     if (message.puppeteer.page === undefined) {
       throw new Error("Page not found");
     }
 
-    if (!selector) {
-      throw new Error("Selector not found");
-    }
+    const property = config.property ?? "innerText";
 
     const payload = await message.puppeteer.page.evaluate(
       ({ selector, property }) => {
