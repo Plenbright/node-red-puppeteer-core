@@ -60,18 +60,6 @@ const handleInput = async (
       }
     }
 
-    if (config.valuetype != "str") {
-      value = `${config.valuetype}.${config.value}`;
-    }
-
-    if (config.valuetype == "msg") {
-      const key = `${config.value}`.replace(/^msg\./, "");
-      value = getValueFromObjectByPath<PuppeteerMessageInFlow, string>(
-        message,
-        key
-      );
-    }
-
     if (!value) {
       throw new Error("Value not found");
     }
