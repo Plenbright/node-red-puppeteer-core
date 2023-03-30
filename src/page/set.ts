@@ -6,19 +6,22 @@ import {
   PuppeteerMessageInFlow,
 } from "../types/PuppeteerConfigType";
 
-const waitForCondition = async (
-  callback: () => Promise<boolean>
-): Promise<void> => {
-  return new Promise((resolve) => {
-    const interval = setInterval(async () => {
-      const result = await callback();
+const getValueFromObjectByPath = <
+  T extends Record<keyof T, T[keyof T]>,
+  K extends T[keyof T]
+>(
+  obj: T,
+  path?: string
+): K => {
+  if (!path) {
+    throw new Error("Path not found");
+  }
 
-      if (result) {
-        clearInterval(interval);
-        resolve();
-      }
-    }, 1000);
-  });
+  const value = path
+    .split(".")
+    .reduce((acc, part) => acc && acc[part as keyof T], obj) as T[keyof T];
+
+  return value;
 };
 
 const handleInput = async (
@@ -39,8 +42,34 @@ const handleInput = async (
 
     let value = config.value;
 
+    switch (config.valuetype) {
+      case "str": {
+        break;
+      }
+
+      case "msg": {
+        const key = `${config.value}`.replace(/^msg\./, "");
+        value = getValueFromObjectByPath<PuppeteerMessageInFlow, string>(
+          message,
+          key
+        );
+      }
+
+      default: {
+        value = `${config.valuetype}.${config.value}`;
+      }
+    }
+
     if (config.valuetype != "str") {
       value = `${config.valuetype}.${config.value}`;
+    }
+
+    if (config.valuetype == "msg") {
+      const key = `${config.value}`.replace(/^msg\./, "");
+      value = getValueFromObjectByPath<PuppeteerMessageInFlow, string>(
+        message,
+        key
+      );
     }
 
     if (!value) {
@@ -65,28 +94,11 @@ const handleInput = async (
       text: `Setting ${selector}:${value}`,
     });
 
-    await waitForCondition(async () => {
-      if (message.puppeteer.page === undefined) {
-        throw new Error("Page not found");
-      }
-
-      if (!selector) {
-        throw new Error("Selector not found");
-      }
-
-      const result = await message.puppeteer.page.$eval(selector, (el) =>
-        el.getAttribute("value")
-      );
-
-      await message.puppeteer.page.$eval(
-        selector,
-        // i really dont like this any but i'm not sure how to fix it
-        (el, value) => el.setAttribute("value", value as any),
-        value
-      );
-
-      return result === value;
-    });
+    await message.puppeteer.page.$eval(
+      selector,
+      (el, value) => el.setAttribute("value", value as string),
+      value
+    );
 
     node.status({
       fill: "grey",
@@ -123,5 +135,6 @@ module.exports = (RED: NodeAPI) => {
 
     this.on("close", () => handleClose(this));
   }
+
   RED.nodes.registerType("puppeteer-page-set-value", PuppeteerPageSetValue);
 };

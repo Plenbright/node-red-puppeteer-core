@@ -42,8 +42,6 @@ const handleInput = async (
       throw new Error("Page not found");
     }
 
-    await message.puppeteer.page.content()
-
     await message.puppeteer.page.waitForSelector(selector, {
       timeout: config.timeout,
     });

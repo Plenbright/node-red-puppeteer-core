@@ -69,4 +69,6 @@ export type PuppeteerMessageInFlow = NodeMessageInFlow & {
     browser?: Browser;
     content?: string;
   };
+} & {
+  [key: string]: string | undefined;
 };
