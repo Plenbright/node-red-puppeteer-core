@@ -5,9 +5,10 @@
     defaults: {
       timeout: { value: 30000 },
       slowMo: { value: 0 },
-      headless: { value: 0, require: true },
       debugport: { value: 0 },
-      devtools: { value: false },
+      headless: { value: 0, require: true },
+      stealth: { value: 0, require: true },
+      devtools: { value: 0, require: true },
       browserWSEndpoint: { value: "wss://" },
       browserUrl: { value: "http://" },
       name: { value: "" },
@@ -26,6 +27,8 @@
       $("#node-input-browserUrl").val(this.browserUrl);
       $("#node-input-browserWSEndpoint").val(this.browserWSEndpoint);
       $("#node-input-devtools").val(this.devtools);
+      $("#node-input-stealth").val(this.stealth);
+
       $("#node-input-name").val(this.name);
     },
     paletteLabel: "Launch",
@@ -63,6 +66,11 @@
         <label for="node-input-devtools" style="width: auto !important; padding-right:10px"><i class="fa fa-briefcase"></i> Show Devtools</label>
         <input type="checkbox" id="node-input-devtools" style="margin-top: 0; display:inline-block; width:auto;" />
     </div>
+
+    <div class="form-row">
+      <label for="node-input-stealth" style="width: auto !important; padding-right:10px"><i class="fa fa-eye"></i> Enable Stealth</label>
+      <input type="checkbox" id="node-input-stealth" style="margin-top: 0; display:inline-block; width:auto;" />
+  </div>
     <div class="form-row">
           <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
           <input type="text" id="node-input-name" style="width:70%;" placeholder="Name" />
