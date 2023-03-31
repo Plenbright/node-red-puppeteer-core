@@ -168,7 +168,7 @@ const launchPuppeteer = async (
     node.status({
       fill: "blue",
       shape: "ring",
-      text: "Launching Stealth Browswer",
+      text: "Launching Stealth Browser",
     });
 
     puppeteerExtra.use(StealthPlugin());
