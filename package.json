@@ -1,6 +1,6 @@
 {
   "name": "@plenbright/node-red-puppeteer-core",
-  "version": "1.0.1-9",
+  "version": "1.0.1-10",
   "description": "NodeRED nodes to control a headless chrome with puppeteer",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "puppeteer-core": "^19.7.5"
+    "puppeteer-core": "^19.7.5",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-anonymize-ua": "^2.4.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
   },
   "bugs": {
     "url": "https://github.com/Plenbright/node-red-puppeteer-core/issues"
