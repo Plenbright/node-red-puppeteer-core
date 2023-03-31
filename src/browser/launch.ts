@@ -152,6 +152,8 @@ const launchPuppeteer = async (
     ];
   }
 
+  const mode = config.headless ? "Headless" : "Normal";
+
   if (config.stealth) {
     launchOptions.args = [
       ...(launchOptions.args ?? []),
@@ -168,7 +170,7 @@ const launchPuppeteer = async (
     node.status({
       fill: "blue",
       shape: "ring",
-      text: "Launching Stealth Browser",
+      text: `Launching Stealth Browser in ${mode} mode`,
     });
 
     puppeteerExtra.use(StealthPlugin());
@@ -180,7 +182,7 @@ const launchPuppeteer = async (
   node.status({
     fill: "grey",
     shape: "ring",
-    text: "Launching Browswer",
+    text: `Launching Browswer in ${mode} mode `,
   });
   return await puppeteer.connect(launchOptions);
 };
@@ -231,6 +233,8 @@ const handleInput = async (
         await enableStealth(page);
       }
 
+      const version = await page.browser().version();
+
       if (config.stealth) {
         const isStealth = await checkStealth(page);
 
@@ -238,14 +242,20 @@ const handleInput = async (
           node.status({
             fill: "yellow",
             shape: "ring",
-            text: "Stealth test failed",
+            text: `Stealth test failed for ${version}`,
           });
         }
 
         node.status({
           fill: "green",
           shape: "dot",
-          text: "Stealth test passed",
+          text: `Stealth test passed for ${version}`,
+        });
+      } else {
+        node.status({
+          fill: "green",
+          shape: "dot",
+          text: `Connected to ${version}`,
         });
       }
 
