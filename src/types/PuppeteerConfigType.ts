@@ -14,6 +14,7 @@ export type PuppeteerInitConfiguration = {
   headless?: boolean;
   devtools?: boolean;
   timeout?: number;
+  stealth?: boolean;
   ignoreHTTPSErrors?: boolean;
   browserUrl?: string;
   browserWSEndpoint?: string;
@@ -66,6 +67,7 @@ export type PuppeteerMessageInFlow = NodeMessageInFlow & {
   payload: any;
   puppeteer: {
     page?: Page;
+    newPage?: () => Promise<Page>;
     browser?: Browser;
     content?: string;
   };
