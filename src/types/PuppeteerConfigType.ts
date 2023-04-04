@@ -15,6 +15,8 @@ export type PuppeteerInitConfiguration = {
   devtools?: boolean;
   timeout?: number;
   stealth?: boolean;
+  enableProxy?: boolean;
+  proxyString?: string;
   ignoreHTTPSErrors?: boolean;
   browserUrl?: string;
   browserWSEndpoint?: string;
