@@ -8,6 +8,7 @@ import puppeteer, {
   BrowserLaunchArgumentOptions,
 } from "puppeteer-core";
 
+import useProxy from "puppeteer-page-proxy";
 import puppeteerExtra from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import UAPlugin from "puppeteer-extra-plugin-anonymize-ua";
@@ -105,21 +106,47 @@ const checkStealth = async (page: Page): Promise<boolean> => {
   return !!isValid;
 };
 
-const createPage = async (
-  stealth?: boolean,
-  browser?: Browser
-): Promise<Page> => {
-  if (!browser) {
+interface CreatePageOptions {
+  enableProxy?: boolean;
+  proxyString?: string;
+  stealth?: boolean;
+  browser?: Browser;
+  node: PuppeteerNode;
+}
+
+const createPage = async (options: CreatePageOptions): Promise<Page> => {
+  if (!options.browser) {
     throw new Error("Missing browser");
   }
 
-  if (stealth) {
-    const page = await browser.newPage();
+  let page: Page;
+  if (options.stealth) {
+    page = await options.browser.newPage();
     await enableStealth(page);
-    return page;
   }
 
-  return browser.newPage();
+  page = await options.browser.newPage();
+
+  const isProxyEnabled =
+    options.enableProxy && options.proxyString && options.proxyString.length;
+
+  if (isProxyEnabled) {
+    options.node.status({
+      fill: "yellow",
+      shape: "dot",
+      text: `Setting up proxy: ${options.proxyString}`,
+    });
+
+    await useProxy(page, options.proxyString!);
+
+    options.node.status({
+      fill: "green",
+      shape: "dot",
+      text: `Enabled proxy: ${options.proxyString}`,
+    });
+  }
+
+  return page;
 };
 
 const launchPuppeteer = async (
@@ -214,7 +241,15 @@ const handleInput = async (
 
     const browser = await launchPuppeteer(launchOptions, node, config);
 
-    const newPage = () => createPage(config.stealth, browser);
+    const pageOptions: CreatePageOptions = {
+      enableProxy: config.enableProxy,
+      proxyString: config.proxyString,
+      stealth: config.stealth,
+      browser,
+      node,
+    };
+
+    const newPage = () => createPage(pageOptions);
 
     if (isRemoteInstance) {
       node.status({
@@ -314,9 +349,13 @@ module.exports = (RED: NodeAPI) => {
     config.headless = config.headless ?? true;
     config.devtools = config.devtools ?? false;
     config.stealth = config.stealth ?? false;
+    config.enableProxy = config.enableProxy ?? false;
 
     this.slowMo = config.slowMo;
     this.debugport = config.debugport;
+
+    this.enableProxy = config.enableProxy;
+    this.proxyString = config.proxyString;
 
     this.stealth = config.stealth;
     this.browserUrl = config.browserUrl;
